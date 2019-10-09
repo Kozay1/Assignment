@@ -1,6 +1,8 @@
 package com.company;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,23 +11,30 @@ import java.util.List;
 
 public class FileUtils {
 
-    public static List<String> readSavedCharacter(String fileName) {
-
-        List<String> listOfStrings = null;
-        try {
-            listOfStrings = Files.readAllLines(Paths.get(fileName));
-        } catch (Exception e) {
-            e.printStackTrace();
+    public static void writeObject(String filename, Object o){
+        ObjectOutputStream objectOutputStream = null;
+        FileOutputStream fileOutputStream = null;
+        try{
+            fileOutputStream = new FileOutputStream(filename, false);
+            objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(o);
+            objectOutputStream.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        return listOfStrings;
     }
 
-    public static void writeAllLines(String fileName, List<String> lines){
+    public static Object readObject(String fileName){
+        ObjectInputStream objectinputstream = null;
+        Object o = null;
         try {
-            Path path = Paths.get(fileName);
-            Files.write(path, lines);
+            FileInputStream streamIn = new FileInputStream(fileName);
+            objectinputstream = new ObjectInputStream(streamIn);
+            o = (Object) objectinputstream.readObject();
+            objectinputstream .close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return o;
     }
 }

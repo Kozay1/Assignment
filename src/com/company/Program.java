@@ -97,6 +97,7 @@ public class Program {
                     String userInput = scan.nextLine();
                     int wizardDamage = rand.nextInt(7 - 4 + 1) + 4;
                     int ratDamage = rand.nextInt(3 - 1 + 1) + 1;
+
                     switch (userInput) {
                         case "1":
                             System.out.println("You attack the rat for " + wizardDamage + " damage");
@@ -379,29 +380,30 @@ public class Program {
             System.out.println("1: Save your current character(This will override any other saved character)\n" +
                     "2: Load a character that you have saved\n" +
                     "3: Main menu");
+            userInput = scan.nextLine();
             switch (userInput){
                 case "1":
 
                     if(role.equalsIgnoreCase("wizard")){
-                        List<String> rows = FileUtils.readSavedCharacter("wizardSave.txt");
                         characters.add(name);
                         characters.add(role);
                         characters.add(Double.toString(wizard.level));
+                        FileUtils.writeObject("wizardSave.ser", characters);
                     }
 
                     else if(role.equalsIgnoreCase("warrior")){
-                        List<String> rows = FileUtils.readSavedCharacter("warriorSave.txt");
                         characters.add(name);
                         characters.add(role);
                         characters.add(Double.toString(warrior.level));
+                        FileUtils.writeObject("warriorSave.ser", characters);
 
                     }
 
                     else if(role.equalsIgnoreCase("hunter")){
-                        List<String> rows = FileUtils.readSavedCharacter("hunterSave.txt");
                         characters.add(name);
                         characters.add(role);
                         characters.add(Double.toString(hunter.level));
+                        FileUtils.writeObject("hunterSave.ser", characters);
                     }
                     else {
                         System.out.println("Please enter a valid input");
