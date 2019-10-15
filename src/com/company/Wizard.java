@@ -1,13 +1,12 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.Random;
-
-public class Wizard extends Character {
+public class Wizard extends Character implements Serializable {
 
     int health;
-    Random rand = new Random();
-    public Wizard(int health, int damage, double level, String damageInfo){
-        super(health, damage, level, damageInfo);
+    public Wizard(int health, int damage, double level, String damageInfo, String role, String name){
+        super(health, damage, level, damageInfo, role, name);
         this.health = health;
     }
 

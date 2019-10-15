@@ -4,9 +4,15 @@ import java.io.Serializable;
 
 public abstract class Character extends Creature implements Serializable {
     double level;
-    public Character(int health, int damage, double level, String damageInfo){
-        super(health, damage, damageInfo);
+    String role;
+    public Character(int health, int damage, double level, String damageInfo, String role, String name){
+        super(health, damage, damageInfo, name);
         this.level = level;
+        this.role = role;
+    }
 
+    @Override
+    public String toString() {
+        return name + " the " + role + ", Health: " + health + ", Level: " + level;
     }
 }

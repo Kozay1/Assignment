@@ -1,11 +1,12 @@
 package com.company;
 
+import java.io.Serializable;
 import java.util.Random;
-public class Hunter extends Character {
+public class Hunter extends Character implements Serializable {
 
     Random rand = new Random();
-    public Hunter(int health, int damage, double level, String damageInfo){
-        super(health, damage, level, damageInfo);
+    public Hunter(int health, int damage, double level, String damageInfo, String role, String name){
+        super(health, damage, level, damageInfo, role, name);
     }
 
     @Override

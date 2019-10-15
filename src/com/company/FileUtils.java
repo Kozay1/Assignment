@@ -7,6 +7,7 @@ import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileUtils {
@@ -24,17 +25,17 @@ public class FileUtils {
         }
     }
 
-    public static Object readObject(String fileName){
+    public static ArrayList<Character> readObject(String fileName){
         ObjectInputStream objectinputstream = null;
-        Object o = null;
+        ArrayList<Character> characters = null;
         try {
             FileInputStream streamIn = new FileInputStream(fileName);
             objectinputstream = new ObjectInputStream(streamIn);
-            o = (Object) objectinputstream.readObject();
+            characters = (ArrayList<Character>) objectinputstream.readObject();
             objectinputstream .close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return o;
+        return characters;
     }
 }

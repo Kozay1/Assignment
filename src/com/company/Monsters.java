@@ -6,7 +6,7 @@ public abstract class Monsters extends Creature {
 
     String name;
     public Monsters(int health, int damage, String damageInfo, String name){
-        super(health, damage, damageInfo);
+        super(health, damage, damageInfo, name);
         this.name = name;
     }
 
