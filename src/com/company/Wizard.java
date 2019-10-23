@@ -21,7 +21,7 @@ public class Wizard extends Character implements Serializable {
         return health;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setHealth(int wizardMaxHealth) {
+        this.health = wizardMaxHealth;
     }
 }
