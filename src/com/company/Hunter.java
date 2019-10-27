@@ -16,4 +16,8 @@ public class Hunter extends Character implements Serializable {
         System.out.println("Damage: " + damageInfo);
     }
 
+    public int getDamage(){
+        Random rand = new Random();
+        return damage = rand.nextInt(7 - 4 + 1) + 4;
+    }
 }

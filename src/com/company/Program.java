@@ -94,8 +94,8 @@ public class Program {
                         "2: Use health potion (20hp)\n" +
                         "0: Leave dungeon");
                 String userInput = scan.nextLine();
-                int wizardDamage = rand.nextInt(7 - 4 + 1) + 4;
-                int ratDamage = rand.nextInt(3 - 1 + 1) + 1;
+                int wizardDamage = wizard.getDamage();
+                int ratDamage = rat.getRatDamage();
 
                 switch (userInput) {
                     case "1":
@@ -127,20 +127,23 @@ public class Program {
                         if (numOfHealthPotions == 0) {
                             System.out.println("You are out of health potions\n" +
                                     "Kill monsters for a chance to get more");
-                        } else {
-                            if (wizard.health == 25) {
-                                System.out.println("You already have full health");
-                            } else if (5 <= wizard.health) {
-                                System.out.println("You consume a health potion");
-                                wizard.setHealth(25);
-                                numOfHealthPotions--;
-                                System.out.println("You have " + numOfHealthPotions + " left");
-                            } else {
-                                System.out.println("You consume a health potion");
-                                wizard.health += healAmount;
-                                numOfHealthPotions--;
-                                System.out.println("You have " + numOfHealthPotions + " left");
-                            }
+                        }
+
+                        else if (wizard.health == 25) {
+                            System.out.println("You already have full health");
+
+                        } else if (5 <= wizard.health) {
+                            System.out.println("You consume a health potion");
+                            wizard.setHealth(25);
+                            numOfHealthPotions--;
+                            System.out.println("You have " + numOfHealthPotions + " left");
+                        }
+
+                        else {
+                            System.out.println("You consume a health potion");
+                            wizard.health += healAmount;
+                            numOfHealthPotions--;
+                            System.out.println("You have " + numOfHealthPotions + " left");
                         }
                         break;
 
@@ -152,82 +155,85 @@ public class Program {
 
             }
 
+            for(Character character : characters){
+                if(character.level == 2.5) {
+                    System.out.println("This works");
+                }
+            }
+            if (wizard.level == 2.5) {
+                System.out.println("You encounter a troll");
+                wizard.setHealth(35);
+                while (troll.health > 0 && wizard.health > 0 && wizard.level < 2.5) {
+                    System.out.println("You are fighting a troll\n" +
+                            "1: Attack\n" +
+                            "2: Use health potion (20hp)\n" +
+                            "0: Leave dungeon");
+                    String userInput = scan.nextLine();
+                    int wizardDamage = rand.nextInt(7 - 4 + 1) + 4;
+                    int ratDamage = rand.nextInt(3 - 1 + 1) + 1;
+                    switch (userInput) {
+                        case "1":
+                            System.out.println("You attack the rat for " + wizardDamage + " damage");
+                            System.out.println("The rat attacks you for " + ratDamage + " damage");
 
+                            rat.health -= wizardDamage;
+                            wizard.health -= ratDamage;
+                            System.out.println("Your health: " + wizard.health);
+                            System.out.println("Enemy health: " + rat.health);
 
-        if (wizard.level == 2.5) {
-            System.out.println("You encounter a troll");
-            wizard.setHealth(35);
-            while (troll.health > 0 && wizard.health > 0 && wizard.level < 2.5) {
-                System.out.println("You are fighting a troll\n" +
-                        "1: Attack\n" +
-                        "2: Use health potion (20hp)\n" +
-                        "0: Leave dungeon");
-                String userInput = scan.nextLine();
-                int wizardDamage = rand.nextInt(7 - 4 + 1) + 4;
-                int ratDamage = rand.nextInt(3 - 1 + 1) + 1;
-                switch (userInput) {
-                    case "1":
-                        System.out.println("You attack the rat for " + wizardDamage + " damage");
-                        System.out.println("The rat attacks you for " + ratDamage + " damage");
+                            if (wizard.health <= 0) {
+                                System.out.println("You lost the fight and your character is dead");
+                                characters.remove(0);
+                                showMainMenu();
+                            } else if (rat.health <= 0) {
+                                System.out.println("You won the fight");
+                                wizard.level += 0.5;
+                                System.out.println("Your level is now " + wizard.level + " and your strength is growing");
+                                rat.health = 10;
+                                if (rand.nextInt(100) > healthPotionDropChance) {
+                                    numOfHealthPotions++;
+                                    System.out.println("You got a health potion, you now have " + numOfHealthPotions + " health potions");
+                                }
+                            }
+                            break;
 
-                        rat.health -= wizardDamage;
-                        wizard.health -= ratDamage;
-                        System.out.println("Your health: " + wizard.health);
-                        System.out.println("Enemy health: " + rat.health);
+                        case "2":
+                            if (numOfHealthPotions == 0) {
+                                System.out.println("You are out of health potions\n" +
+                                        "Kill monsters for a chance to get more");
+                            } else {
+                                if (wizard.health == 25) {
+                                    System.out.println("You already have full health");
+                                } else if (5 <= wizard.health) {
+                                    System.out.println("You consume a health potion");
+                                    wizard.setHealth(25);
+                                    numOfHealthPotions--;
+                                    System.out.println("You have " + numOfHealthPotions + " left");
+                                } else {
+                                    System.out.println("You consume a health potion");
+                                    wizard.health += healAmount;
+                                    numOfHealthPotions--;
+                                    System.out.println("You have " + numOfHealthPotions + " left");
+                                }
+                            }
+                            break;
 
-                        if (wizard.health <= 0) {
-                            System.out.println("You lost the fight and your character is dead");
-                            characters.remove(0);
+                        case "0":
+                            System.out.println("You manage to escape the rat");
                             showMainMenu();
-                        } else if (rat.health <= 0) {
-                            System.out.println("You won the fight");
-                            wizard.level += 0.5;
-                            System.out.println("Your level is now " + wizard.level + " and your strength is growing");
-                            rat.health = 10;
-                            if (rand.nextInt(100) > healthPotionDropChance) {
-                                numOfHealthPotions++;
-                                System.out.println("You got a health potion, you now have " + numOfHealthPotions + " health potions");
-                            }
-                        }
-                        break;
+                            break;
+                    }
 
-                    case "2":
-                        if (numOfHealthPotions == 0) {
-                            System.out.println("You are out of health potions\n" +
-                                    "Kill monsters for a chance to get more");
-                        } else {
-                            if (wizard.health == 25) {
-                                System.out.println("You already have full health");
-                            } else if (5 <= wizard.health) {
-                                System.out.println("You consume a health potion");
-                                wizard.setHealth(25);
-                                numOfHealthPotions--;
-                                System.out.println("You have " + numOfHealthPotions + " left");
-                            } else {
-                                System.out.println("You consume a health potion");
-                                wizard.health += healAmount;
-                                numOfHealthPotions--;
-                                System.out.println("You have " + numOfHealthPotions + " left");
-                            }
-                        }
-                        break;
-
-                    case "0":
-                        System.out.println("You manage to escape the rat");
-                        showMainMenu();
-                        break;
                 }
 
             }
-
-        }
-        showMainMenu();
+            showMainMenu();
 
         } else if (warrior.role.equalsIgnoreCase("warrior")) {
-            System.out.println("You are now entering the dungeon with " + warrior.name + " the " + warrior.role);
+            System.out.println("You are now entering the dungeon with " + name + " the " + warrior.role);
             showMainMenu();
         } else if (hunter.role.equalsIgnoreCase("hunter")) {
-            System.out.println("You are now entering the dungeon with " + hunter.name + " the " + hunter.role);
+            System.out.println("You are now entering the dungeon with " + name + " the " + hunter.role);
             showMainMenu();
         }
 
@@ -236,7 +242,7 @@ public class Program {
     public void createCharacter() {
         if (numOfCharacters < MAX_CHARACTERS) {
             System.out.println("Enter the name of you character: ");
-            wizard.name = scan.nextLine();
+            name = scan.nextLine();
 
             System.out.println("What character do you want to play?\n" +
                     "1: Wizard\n" +
@@ -247,28 +253,30 @@ public class Program {
             switch (getCharacter) {
                 case "1":
                     numOfCharacters++;
+                    wizard.name = name;
                     characters.add(wizard);
-                    System.out.println("You created a wizard called " + wizard.name);
+                    System.out.println("You created a wizard called " + name);
                     showMainMenu();
                     break;
                 case "2":
                     numOfCharacters++;
+                    warrior.name = name;
                     characters.add(warrior);
-                    System.out.println("You created a warrior called " + wizard.name);
+                    System.out.println("You created a warrior called " + name);
                     showMainMenu();
                     break;
                 case "3":
                     numOfCharacters++;
+                    hunter.name = name;
                     characters.add(hunter);
-                    System.out.println("You created a hunter called " + wizard.name);
+                    System.out.println("You created a hunter called " + name);
                     showMainMenu();
                     break;
                 case "0":
                     showMainMenu();
                     break;
             }
-        }
-        else {
+        } else {
             System.out.println("You already have a character");
             showMainMenu();
         }
@@ -281,7 +289,15 @@ public class Program {
             showMainMenu();
         }
         for (Character character : characters) {
-            System.out.println(wizard.name + " " + character);
+            if(character.role.equalsIgnoreCase("wizard")){
+                System.out.println(wizard);
+            }
+            else if(character.role.equalsIgnoreCase("warrior")){
+                System.out.println(warrior);
+            }
+            else if(character.role.equalsIgnoreCase("hunter")){
+                System.out.println(hunter);
+            }
         }
         showMainMenu();
     }
@@ -382,10 +398,27 @@ public class Program {
                     break;
 
                 case "2":
+                    if(numOfCharacters >= MAX_CHARACTERS){
+                        System.out.println("You already have a character");
+                        saveAndLoadCharacter();
+                    }
                     numOfCharacters++;
                     ArrayList<Character> charactersFromFile = FileUtils.readObject("characterSave.ser");
-                    for (Character character : charactersFromFile) {
-                        System.out.println(character);
+                    for(Character character : charactersFromFile){
+                        characters.add(character);
+                        if(character.role.equalsIgnoreCase("wizard")){
+                            wizard.level = character.level;
+                            wizard.name = character.name;
+                        }
+                        else if(character.role.equalsIgnoreCase("warrior")){
+                            System.out.println("warrior works");
+                            warrior.level = character.level;
+                            warrior.name = character.name;
+                        }
+                        else if(character.role.equalsIgnoreCase("hunter")){
+                            hunter.level = character.level;
+                            hunter.name = character.name;
+                        }
                     }
                     saveAndLoadCharacter();
                     break;

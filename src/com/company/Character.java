@@ -13,6 +13,6 @@ public abstract class Character extends Creature implements Serializable {
 
     @Override
     public String toString() {
-        return name + " the " + role + ", Health: " + health + ", Level: " + level;
+        return name + " the " + role + " has " + health + "hp and is level " + level;
     }
 }
