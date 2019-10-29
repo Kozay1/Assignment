@@ -11,11 +11,10 @@ public class Dragon extends Monsters {
 
     @Override
     public void information() {
-        System.out.println("The dragon has " + health + " health and can hit for 40-65 damage");
-        System.out.println("The special ability is called fireball and it deals 80 damage");
+        System.out.println("The dragon has " + health + " health and can hit for 17-25 damage");
     }
 
     public int getDragonDamage() {
-        return damage = rand.nextInt(3 - 1 + 1) + 1;
+        return damage = rand.nextInt(25 - 17 + 1) + 17;
     }
 }

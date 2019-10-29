@@ -11,7 +11,6 @@ public class Rat extends Monsters{
     @Override
     public void information() {
         System.out.println("The rat has " + health + " health and can hit for 1-3 damage");
-        System.out.println("The special ability is called Bite and it deals 4 damage");
     }
 
     public int getRatDamage() {

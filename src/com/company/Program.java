@@ -6,13 +6,13 @@ public class Program {
 
     private static final int MAX_CHARACTERS = 1;
     Rat rat = new Rat(10, 0, "1-3", "Rat");
-    Spider spider = new Spider(15, 0, "5-7", "Spider");
-    Troll troll = new Troll(25, 0, "10-15", "Troll");
-    Bear bear = new Bear(50, 0, "18-25", "Bear");
-    Orc orc = new Orc(85, 0, "20-35", "Orc");
-    Dragon dragon = new Dragon(150, 0, "40-65", "Dragon");
+    Spider spider = new Spider(15, 0, "3-5", "Spider");
+    Troll troll = new Troll(25, 0, "7-11", "Troll");
+    Bear bear = new Bear(35, 0, "13-20", "Bear");
+    Orc orc = new Orc(45, 0, "15-22", "Orc");
+    Dragon dragon = new Dragon(60, 0, "17-25", "Dragon");
 
-    Wizard wizard = new Wizard(25, 0, 1, 50, "4-7", "Wizard", "");
+    Wizard wizard = new Wizard(25, 0, 9, 50, "4-7", "Wizard", "");
 
     Random rand = new Random();
     Scanner scan = new Scanner(System.in);
@@ -20,8 +20,10 @@ public class Program {
     private int numOfHealthPotions = 1;
     private int numOfManaPotions = 1;
     private int manaAmount = 25;
+    private int bigManaAmount = 50;
     private int manaPotionDropChance = 50;
     private int healAmount = 20;
+    private int bigHealAmount = 30;
     private int healthPotionDropChance = 50;
     private ArrayList<Character> characters = new ArrayList<>();
     private ArrayList<Monsters> monsters = new ArrayList<>();
@@ -136,6 +138,7 @@ public class Program {
                     wizard.health -= ratDamage;
 
                     System.out.println("You shoot a fireball that deals " + fireball + " damage");
+                    System.out.println("The rat attacks you for " + ratDamage);
                     if (wizard.health <= 0) {
                         System.out.println("You lost the fight and your character is dead");
                         characters.remove(0);
@@ -165,10 +168,19 @@ public class Program {
             }
         }
 
-        wizard.setHealth(40);
+        wizard.setHealth(45);
         wizard.mana = 100;
         getRandomMonster();
         while (monsterHealth > 0 && wizard.getHealth() > 0 && wizard.level < 10) {
+            if(monsterName.equalsIgnoreCase("bear")){
+                monsterDamage = bear.getBearDamage();
+            }
+            if(monsterName.equalsIgnoreCase("spider")){
+                monsterDamage = spider.getSpiderDamage();
+            }
+            if(monsterName.equalsIgnoreCase("troll")){
+                monsterDamage = troll.getTrollDamage();
+            }
             System.out.println("Health: " + wizard.health + "            " + "Enemy Health: " + monsterHealth + "\n" +
                     "Mana: " + wizard.mana + "             " + "Enemy Damage: " + monsterDamageInfo + "\n" +
                     "Health potions: " + numOfHealthPotions + "\n" +
@@ -176,20 +188,19 @@ public class Program {
             System.out.println("You are fighting a " + monsterName +"\n"+
                     "1: Attack\n" +
                     "2: Fireball\n" +
-                    "3: Use health potion (20hp)\n" +
+                    "3: Use health potion (30hp)\n" +
                     "4: Use mana potion (25mana)\n" +
                     "0: Leave dungeon");
             String userInput = scan.nextLine();
-            int wizardDamage = rand.nextInt(10 - 7 + 1) + 7;;
-            int randomDamage = monsterDamage;
+            int wizardDamage = rand.nextInt(12 - 8 + 1) + 8;
 
             switch (userInput) {
                 case "1":
-                    monsterHealth -= wizard.getDamage();
-                    wizard.health -= randomDamage;
+                    monsterHealth -= wizardDamage;
+                    wizard.health -= monsterDamage;
 
-                    System.out.println("You attack the rat for " + wizardDamage + " damage");
-                    System.out.println("The rat attacks you for " + randomDamage + " damage");
+                    System.out.println("You attack the " + monsterName + " for " + wizardDamage + " damage");
+                    System.out.println("The " + monsterName + " attacks you for " + monsterDamage + " damage");
 
                     if (wizard.health <= 0) {
                         System.out.println("You lost the fight and your character is dead");
@@ -215,6 +226,7 @@ public class Program {
                     wizard.health -= monsterDamage;
 
                     System.out.println("You shoot a fireball that deals " + fireball + " damage");
+                    System.out.println("The " + monsterName + " attacks you for " + monsterDamage);
                     if (wizard.health <= 0) {
                         System.out.println("You lost the fight and your character is dead");
                         characters.remove(0);
@@ -230,17 +242,21 @@ public class Program {
                     break;
 
                 case "3":
-                    useHealthPotion();
+                    useMediumHealthPotion();
                     break;
 
                 case "4":
-                    useManaPotion();
+                    useBigManaPotion();
                     break;
 
                 case "0":
                     System.out.println("You manage to escape");
                     showMainMenu();
                     break;
+            }
+            if(wizard.level == 10){
+                System.out.println("You won the game!!!!!");
+                showMainMenu();
             }
         }
     }
@@ -264,6 +280,25 @@ public class Program {
         }
     }
 
+    public void useMediumHealthPotion(){
+        if (numOfHealthPotions == 0) {
+            System.out.println("You are out of health potions\n" +
+                    "Kill monsters for a chance to get more");
+        }
+        else if (wizard.health == 45) {
+            System.out.println("You already have full health");
+
+        }
+        else if (wizard.health + bigHealAmount > 45){
+            wizard.setHealth(45);
+            numOfHealthPotions--;
+        }
+        else{
+            wizard.health += bigHealAmount;
+            numOfHealthPotions--;
+        }
+    }
+
     public void useManaPotion(){
         if (numOfManaPotions == 0) {
             System.out.println("You are out of mana potions\n" +
@@ -283,6 +318,25 @@ public class Program {
         }
     }
 
+    public void useBigManaPotion(){
+        if (numOfManaPotions == 0) {
+            System.out.println("You are out of mana potions\n" +
+                    "Kill monsters for a chance to get more");
+        }
+        else if (wizard.mana == 100) {
+            System.out.println("You already have full mana");
+
+        }
+        else if (wizard.mana + bigManaAmount > 100){
+            wizard.mana = 100;
+            numOfManaPotions--;
+        }
+        else{
+            wizard.mana += bigManaAmount;
+            numOfManaPotions--;
+        }
+    }
+
     public void dropChanceManaAndHealth(){
         if (rand.nextInt(100) > healthPotionDropChance) {
             numOfHealthPotions++;
@@ -295,24 +349,31 @@ public class Program {
     }
 
     public void getRandomMonster(){
-        int randomNumber = rand.nextInt(3) + 1;
-        if(randomNumber == 1){
+        int randomNumber = rand.nextInt(70) + 1;
+        if(randomNumber <= 20){
             monsterHealth = spider.health;
-            monsterDamage = spider.getSpiderDamage();
             monsterName = spider.name;
             monsterDamageInfo = spider.damageInfo;
         }
-        else if(randomNumber == 2){
+        else if(randomNumber > 20 && randomNumber <= 40){
             monsterHealth = troll.health;
-            monsterDamage = troll.getTrollDamage();
             monsterName = troll.name;
             monsterDamageInfo = troll.damageInfo;
         }
-        else if(randomNumber == 3) {
+        else if(randomNumber > 40 && randomNumber <= 60) {
             monsterHealth = bear.health;
-            monsterDamage = bear.getBearDamage();
             monsterName = bear.name;
             monsterDamageInfo = bear.damageInfo;
+        }
+        else if(randomNumber > 60 && randomNumber <= 65) {
+            monsterHealth = orc.health;
+            monsterName = orc.name;
+            monsterDamageInfo = orc.damageInfo;
+        }
+        else if(randomNumber > 65) {
+            monsterHealth = dragon.health;
+            monsterName = dragon.name;
+            monsterDamageInfo = dragon.damageInfo;
         }
     }
 

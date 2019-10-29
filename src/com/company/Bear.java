@@ -11,11 +11,10 @@ public class Bear extends Monsters {
 
     @Override
     public void information() {
-        System.out.println("The bear has " + health + " health and can hit for 18-25 damage");
-        System.out.println("The special ability is called Bleed and it deals 4 damage/turn");
+        System.out.println("The bear has " + health + " health and can hit for 13-20 damage");
     }
 
     public int getBearDamage() {
-        return damage = rand.nextInt(3 - 1 + 1) + 1;
+        return damage = rand.nextInt(20 - 13 + 1) + 13;
     }
 }

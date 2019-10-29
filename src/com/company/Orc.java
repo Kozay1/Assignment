@@ -11,11 +11,10 @@ public class Orc extends Monsters {
 
     @Override
     public void information() {
-        System.out.println("The orc has " + health + " health and can hit for 20-35 damage");
-        System.out.println("The special ability is called Block and will block the attack");
+        System.out.println("The orc has " + health + " health and can hit for 15-22 damage");
     }
 
     public int getOrcDamage() {
-        return damage = rand.nextInt(3 - 1 + 1) + 1;
+        return damage = rand.nextInt(22 - 15 + 1) + 15;
     }
 }
