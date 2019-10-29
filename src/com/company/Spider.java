@@ -13,4 +13,8 @@ public class Spider extends Monsters {
         System.out.println("The spider has " + health + " health and can hit for 5-7 damage");
         System.out.println("The special ability is called Poison and it deals 2 damage/turn");
     }
+
+    public int getSpiderDamage() {
+        return damage = rand.nextInt(3 - 1 + 1) + 1;
+    }
 }

@@ -15,4 +15,7 @@ public class Dragon extends Monsters {
         System.out.println("The special ability is called fireball and it deals 80 damage");
     }
 
+    public int getDragonDamage() {
+        return damage = rand.nextInt(3 - 1 + 1) + 1;
+    }
 }
