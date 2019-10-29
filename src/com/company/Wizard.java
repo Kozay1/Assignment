@@ -4,8 +4,9 @@ import java.io.Serializable;
 import java.util.Random;
 public class Wizard extends Character implements Serializable {
 
-    public Wizard(int health, int damage, double level, String damageInfo, String role, String name){
-        super(health, damage, level, damageInfo, role, name);
+    public Wizard(int health, int damage, double level, int mana, String damageInfo, String role, String name){
+        super(health, damage, level, mana, damageInfo, role, name);
+
 
     }
 
@@ -22,6 +23,10 @@ public class Wizard extends Character implements Serializable {
 
     public void setHealth(int wizardMaxHealth) {
         this.health = wizardMaxHealth;
+    }
+
+    public int getMana(){
+        return mana;
     }
 
     public int getDamage(){

@@ -3,8 +3,8 @@ package com.company;
 import java.io.Serializable;
 
 public abstract class Creature implements Serializable {
-    public int health;
-    public int damage;
+    int health;
+    int damage;
     public String damageInfo;
     public String name;
     public Creature(int health, int damage, String damageInfo, String name){
