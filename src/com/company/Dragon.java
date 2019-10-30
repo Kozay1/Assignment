@@ -10,12 +10,13 @@ public class Dragon extends Monsters {
     /**
      * <h1>Dragon</h1>
      * This will create the monster "dragon"
-     * @param health The health of dragon
-     * @param damage The damage of dragon
+     *
+     * @param health     The health of dragon
+     * @param damage     The damage of dragon
      * @param damageInfo Info about how much damages the dragon deals
-     * @param name The name of the monster so user knows who he is fighting
+     * @param name       The name of the monster so user knows who he is fighting
      */
-    public Dragon(int health, int damage, String damageInfo, String name){
+    public Dragon(int health, int damage, String damageInfo, String name) {
         super(health, damage, damageInfo, name);
     }
 

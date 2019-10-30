@@ -14,12 +14,13 @@ public abstract class Creature implements Serializable {
     /**
      * <h1>Creature</h1>
      * Handles "Character" and "Monsters"
-     * @param health Makes sure all monsters and characters has a health
-     * @param damage Makes sure all monsters and characters can deal damage
+     *
+     * @param health     Makes sure all monsters and characters has a health
+     * @param damage     Makes sure all monsters and characters can deal damage
      * @param damageInfo All monsters and characters gets a damage info to know how much damage they deal
-     * @param name All monsters and characters can have a name
+     * @param name       All monsters and characters can have a name
      */
-    public Creature(int health, int damage, String damageInfo, String name){
+    public Creature(int health, int damage, String damageInfo, String name) {
         this.health = health;
         this.damage = damage;
         this.damageInfo = damageInfo;

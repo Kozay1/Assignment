@@ -8,15 +8,17 @@ import java.util.ArrayList;
 public abstract class Monsters extends Creature {
 
     String name;
+
     /**
      * <h1>Monsters</h1>
      * Handles the wizard
-     * @param health The health of the monsters
-     * @param damage The damage the monsters deal
+     *
+     * @param health     The health of the monsters
+     * @param damage     The damage the monsters deal
      * @param damageInfo Shows how much the monsters can hit for
-     * @param name The name of the monsters
+     * @param name       The name of the monsters
      */
-    public Monsters(int health, int damage, String damageInfo, String name){
+    public Monsters(int health, int damage, String damageInfo, String name) {
         super(health, damage, damageInfo, name);
         this.name = name;
     }

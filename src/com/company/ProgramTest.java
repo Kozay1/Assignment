@@ -32,15 +32,15 @@ class ProgramTest {
         result = ((wizard.health = 1) + healAmount) == 21;
         assertTrue(result);
 
-        if(randomNumber > healPotionDropChance){
+        if (randomNumber > healPotionDropChance) {
             int resultDropChance = numOfHealthPotions + 1;
             numOfHealthPotions++;
             assertEquals(resultDropChance, numOfHealthPotions);
         }
 
-        if(randomNumber < healPotionDropChance){
+        if (randomNumber < healPotionDropChance) {
             int resultDropChance = numOfHealthPotions + 0;
-            assertEquals(numOfHealthPotions,resultDropChance );
+            assertEquals(numOfHealthPotions, resultDropChance);
         }
     }
 
@@ -70,15 +70,15 @@ class ProgramTest {
         result = ((wizard.health = 1) + bigHealAmount) == 31;
         assertTrue(result);
 
-        if(randomNumber > healPotionDropChance){
+        if (randomNumber > healPotionDropChance) {
             int resultDropChance = numOfBigHealthPotions + 1;
             numOfBigHealthPotions++;
             assertEquals(resultDropChance, numOfBigHealthPotions);
         }
 
-        if(randomNumber < healPotionDropChance){
+        if (randomNumber < healPotionDropChance) {
             int resultDropChance = numOfBigHealthPotions + 0;
-            assertEquals(numOfBigHealthPotions,resultDropChance );
+            assertEquals(numOfBigHealthPotions, resultDropChance);
         }
     }
 
@@ -96,15 +96,15 @@ class ProgramTest {
         result = ((wizard.mana = 0) + manaAmount) == 25;
         assertTrue(result);
 
-        if(randomNumber > manaPotionDropChance){
+        if (randomNumber > manaPotionDropChance) {
             int resultDropChance = numOfManaPotions + 1;
             numOfManaPotions++;
             assertEquals(resultDropChance, numOfManaPotions);
         }
 
-        if(randomNumber < manaPotionDropChance){
+        if (randomNumber < manaPotionDropChance) {
             int resultDropChance = numOfManaPotions + 0;
-            assertEquals(numOfManaPotions,resultDropChance );
+            assertEquals(numOfManaPotions, resultDropChance);
         }
     }
 
@@ -125,15 +125,15 @@ class ProgramTest {
         result = ((wizard.mana = 50) + manaAmount) == 100;
         assertTrue(result);
 
-        if(randomNumber > manaPotionDropChance){
+        if (randomNumber > manaPotionDropChance) {
             int resultDropChance = numOfBigManaPotions + 1;
             numOfBigManaPotions++;
             assertEquals(resultDropChance, numOfBigManaPotions);
         }
 
-        if(randomNumber < manaPotionDropChance){
+        if (randomNumber < manaPotionDropChance) {
             int resultDropChance = numOfBigManaPotions + 0;
-            assertEquals(numOfBigManaPotions,resultDropChance );
+            assertEquals(numOfBigManaPotions, resultDropChance);
         }
     }
 }

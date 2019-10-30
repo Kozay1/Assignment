@@ -15,10 +15,10 @@ import java.util.List;
  */
 public class FileUtils {
 
-    public static void writeObject(String filename, Object o){
+    public static void writeObject(String filename, Object o) {
         ObjectOutputStream objectOutputStream = null;
         FileOutputStream fileOutputStream = null;
-        try{
+        try {
             fileOutputStream = new FileOutputStream(filename, false);
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
             objectOutputStream.writeObject(o);
@@ -28,14 +28,14 @@ public class FileUtils {
         }
     }
 
-    public static ArrayList<Character> readObject(String fileName){
+    public static ArrayList<Character> readObject(String fileName) {
         ObjectInputStream objectinputstream = null;
         ArrayList<Character> characters = null;
         try {
             FileInputStream streamIn = new FileInputStream(fileName);
             objectinputstream = new ObjectInputStream(streamIn);
             characters = (ArrayList<Character>) objectinputstream.readObject();
-            objectinputstream .close();
+            objectinputstream.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

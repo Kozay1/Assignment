@@ -10,12 +10,13 @@ public class Spider extends Monsters {
     /**
      * <h1>Spider</h1>
      * This will create the monster "spider"
-     * @param health The health of spider
-     * @param damage The damage of spider
+     *
+     * @param health     The health of spider
+     * @param damage     The damage of spider
      * @param damageInfo Info about how much damages the spider deals
-     * @param name The name of the monster so user knows who he is fighting
+     * @param name       The name of the monster so user knows who he is fighting
      */
-    public Spider(int health, int damage, String damageInfo, String name){
+    public Spider(int health, int damage, String damageInfo, String name) {
         super(health, damage, damageInfo, name);
     }
 
