@@ -2,6 +2,9 @@ package com.company;
 
 import java.util.*;
 
+/**
+ * This is where the main program runs
+ */
 public class Program {
 
     private static final int MAX_CHARACTERS = 1;

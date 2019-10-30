@@ -10,6 +10,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Makes sure you can save and load from file
+ */
 public class FileUtils {
 
     public static void writeObject(String filename, Object o){
