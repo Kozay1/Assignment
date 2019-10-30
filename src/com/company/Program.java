@@ -37,55 +37,53 @@ public class Program {
     }
 
     public void showMainMenu() {
-        System.out.println("1: Play the game\n" +
-                "2: Create new character\n" +
-                "3: View character\n" +
-                "4: Class information\n" +
-                "5: View monsters\n" +
-                "6: Save and load character\n" +
-                "7: Remove character\n" +
-                "0: Exit");
-        System.out.println("Enter your menu choice:");
-        try {
-            String menuChoice = scan.nextLine();
+        String menuChoice = "";
+        while (!menuChoice.equals("0")) {
+            System.out.println("1: Play the game\n" +
+                    "2: Create new character\n" +
+                    "3: View character\n" +
+                    "4: Class information\n" +
+                    "5: View monsters\n" +
+                    "6: Save and load character\n" +
+                    "7: Remove character\n" +
+                    "0: Exit");
+            System.out.println("Enter your menu choice:");
 
-            do {
-                switch (menuChoice) {
-                    case "1":
-                        playTheGame();
-                        break;
+            menuChoice = scan.nextLine();
 
-                    case "2":
-                        createCharacter();
-                        break;
+            switch (menuChoice) {
+                case "1":
+                    playTheGame();
+                    break;
 
-                    case "3":
-                        viewCharacters();
-                        break;
+                case "2":
+                    createCharacter();
+                    break;
 
-                    case "4":
-                        classInformation();
-                        break;
+                case "3":
+                    viewCharacters();
+                    break;
 
-                    case "5":
-                        viewMonsters();
-                        break;
+                case "4":
+                    classInformation();
+                    break;
 
-                    case "6":
-                        saveAndLoadCharacter();
-                        break;
+                case "5":
+                    viewMonsters();
+                    break;
 
-                    case "7":
-                        removeCharacter();
-                        break;
+                case "6":
+                    saveAndLoadCharacter();
+                    break;
 
-                    case "0":
-                        exit();
-                        break;
-                }
-            } while (!menuChoice.equals("0"));
-        } catch (Exception e) {
-            System.out.println("Something went wrong, try again");
+                case "7":
+                    removeCharacter();
+                    break;
+
+                case "0":
+                    exit();
+                    break;
+            }
         }
     }
 
@@ -135,25 +133,26 @@ public class Program {
                     case "2":
                         if (wizard.mana < 25) {
                             System.out.println("You don't have enough mana");
-                        }
-                        int fireball = rand.nextInt(20 - 15 + 1) + 15;
-                        wizard.mana -= 25;
+                        } else {
+                            int fireball = rand.nextInt(20 - 15 + 1) + 15;
+                            wizard.mana -= 25;
 
-                        rat.health -= fireball;
-                        wizard.health -= ratDamage;
+                            rat.health -= fireball;
+                            wizard.health -= ratDamage;
 
-                        System.out.println("You shoot a fireball that deals " + fireball + " damage");
-                        System.out.println("The rat attacks you for " + ratDamage);
-                        if (wizard.health <= 0) {
-                            System.out.println("You lost the fight and your character is dead");
-                            characters.remove(0);
-                            showMainMenu();
-                        } else if (rat.health <= 0) {
-                            System.out.println("You won the fight");
-                            wizard.level += 0.5;
-                            System.out.println("Your level is now " + wizard.level + " and your strength is growing\n");
-                            rat.health = 10;
-                            dropChanceManaAndHealth();
+                            System.out.println("You shoot a fireball that deals " + fireball + " damage");
+                            System.out.println("The rat attacks you for " + ratDamage);
+                            if (wizard.health <= 0) {
+                                System.out.println("You lost the fight and your character is dead");
+                                characters.remove(0);
+                                showMainMenu();
+                            } else if (rat.health <= 0) {
+                                System.out.println("You won the fight");
+                                wizard.level += 0.5;
+                                System.out.println("Your level is now " + wizard.level + " and your strength is growing\n");
+                                rat.health = 10;
+                                dropChanceManaAndHealth();
+                            }
                         }
                         break;
 
@@ -204,67 +203,72 @@ public class Program {
                     "3: Use health potion (30hp)\n" +
                     "4: Use mana potion (25mana)\n" +
                     "0: Leave dungeon");
-            String userInput = scan.nextLine();
-            int wizardDamage = rand.nextInt(12 - 8 + 1) + 8;
+            try {
+                String userInput = scan.nextLine();
+                int wizardDamage = rand.nextInt(12 - 8 + 1) + 8;
 
-            switch (userInput) {
-                case "1":
-                    monsterHealth -= wizardDamage;
-                    wizard.health -= monsterDamage;
+                switch (userInput) {
+                    case "1":
+                        monsterHealth -= wizardDamage;
+                        wizard.health -= monsterDamage;
 
-                    System.out.println("You attack the " + monsterName + " for " + wizardDamage + " damage");
-                    System.out.println("The " + monsterName + " attacks you for " + monsterDamage + " damage");
+                        System.out.println("You attack the " + monsterName + " for " + wizardDamage + " damage");
+                        System.out.println("The " + monsterName + " attacks you for " + monsterDamage + " damage");
 
-                    if (wizard.health <= 0) {
-                        System.out.println("You lost the fight and your character is dead");
-                        characters.remove(0);
+                        if (wizard.health <= 0) {
+                            System.out.println("You lost the fight and your character is dead");
+                            characters.remove(0);
+                            showMainMenu();
+                        } else if (monsterHealth <= 0) {
+                            System.out.println("You won the fight");
+                            wizard.level += 0.5;
+                            System.out.println("Your level is now " + wizard.level + " and your strength is growing");
+                            getRandomMonster();
+                            dropChanceManaAndHealth();
+                        }
+                        break;
+
+                    case "2":
+                        if (wizard.mana <= 25) {
+                            System.out.println("You don't have enough mana");
+                        } else {
+                            int fireball = rand.nextInt(28 - 20 + 1) + 20;
+                            wizard.mana -= 25;
+
+                            monsterHealth -= fireball;
+                            wizard.health -= monsterDamage;
+
+                            System.out.println("You shoot a fireball that deals " + fireball + " damage");
+                            System.out.println("The " + monsterName + " attacks you for " + monsterDamage);
+                            if (wizard.health <= 0) {
+                                System.out.println("You lost the fight and your character is dead");
+                                characters.remove(0);
+                                showMainMenu();
+                            } else if (rat.health <= 0) {
+                                System.out.println("You won the fight");
+                                wizard.level += 0.5;
+                                System.out.println("Your level is now " + wizard.level + " and your strength is growing\n");
+                                getRandomMonster();
+                                dropChanceManaAndHealth();
+                            }
+                        }
+                        break;
+
+                    case "3":
+                        useMediumHealthPotion();
+                        break;
+
+                    case "4":
+                        useBigManaPotion();
+                        break;
+
+                    case "0":
+                        System.out.println("You manage to escape");
                         showMainMenu();
-                    } else if (monsterHealth <= 0) {
-                        System.out.println("You won the fight");
-                        wizard.level += 0.5;
-                        System.out.println("Your level is now " + wizard.level + " and your strength is growing");
-                        getRandomMonster();
-                        dropChanceManaAndHealth();
-                    }
-                    break;
-
-                case "2":
-                    if (wizard.mana < 25) {
-                        System.out.println("You don't have enough mana");
-                    }
-                    int fireball = rand.nextInt(28 - 20 + 1) + 20;
-                    wizard.mana -= 25;
-
-                    monsterHealth -= fireball;
-                    wizard.health -= monsterDamage;
-
-                    System.out.println("You shoot a fireball that deals " + fireball + " damage");
-                    System.out.println("The " + monsterName + " attacks you for " + monsterDamage);
-                    if (wizard.health <= 0) {
-                        System.out.println("You lost the fight and your character is dead");
-                        characters.remove(0);
-                        showMainMenu();
-                    } else if (rat.health <= 0) {
-                        System.out.println("You won the fight");
-                        wizard.level += 0.5;
-                        System.out.println("Your level is now " + wizard.level + " and your strength is growing\n");
-                        getRandomMonster();
-                        dropChanceManaAndHealth();
-                    }
-                    break;
-
-                case "3":
-                    useMediumHealthPotion();
-                    break;
-
-                case "4":
-                    useBigManaPotion();
-                    break;
-
-                case "0":
-                    System.out.println("You manage to escape");
-                    showMainMenu();
-                    break;
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Please enter a valid input");
             }
             if (wizard.level == 10) {
                 System.out.println("You won the game!!!!!");
@@ -376,8 +380,11 @@ public class Program {
     public void createCharacter() {
         if (numOfCharacters < MAX_CHARACTERS) {
             System.out.println("Enter the name of you character: ");
-            name = scan.nextLine();
-
+            try {
+                name = scan.nextLine();
+            } catch (Exception e) {
+                System.out.println("Please enter a valid input");
+            }
             numOfCharacters++;
             wizard.name = name;
             characters.add(wizard);
@@ -423,7 +430,11 @@ public class Program {
             System.out.println("1: Sort by name\n" +
                     "2: Sort by health and damage\n" +
                     "0: Main menu");
-            userInput = scan.nextLine();
+            try {
+                userInput = scan.nextLine();
+            } catch (Exception e) {
+                System.out.println("Please enter a valid input");
+            }
 
             switch (userInput) {
                 case "1":
@@ -461,7 +472,11 @@ public class Program {
             System.out.println("1: Save your current character(This will override any other saved character)\n" +
                     "2: Load a character that you have saved\n" +
                     "0: Main menu");
-            userInput = scan.nextLine();
+            try {
+                userInput = scan.nextLine();
+            } catch (Exception e) {
+                System.out.println("Please enter a valid input");
+            }
             switch (userInput) {
                 case "1":
                     if (numOfCharacters < MAX_CHARACTERS) {
