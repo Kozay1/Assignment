@@ -5,8 +5,8 @@ import java.io.Serializable;
 public abstract class Creature implements Serializable {
     int health;
     int damage;
-    public String damageInfo;
-    public String name;
+    String damageInfo;
+    String name;
     public Creature(int health, int damage, String damageInfo, String name){
         this.health = health;
         this.damage = damage;

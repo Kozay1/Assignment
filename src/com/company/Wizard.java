@@ -25,10 +25,6 @@ public class Wizard extends Character implements Serializable {
         this.health = wizardMaxHealth;
     }
 
-    public int getMana(){
-        return mana;
-    }
-
     public int getDamage(){
         Random rand = new Random();
         return damage = rand.nextInt(7 - 4 + 1) + 4;

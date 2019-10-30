@@ -12,7 +12,7 @@ public class Program {
     Orc orc = new Orc(45, 0, "15-22", "Orc");
     Dragon dragon = new Dragon(60, 0, "17-25", "Dragon");
 
-    Wizard wizard = new Wizard(25, 0, 9, 50, "4-7", "Wizard", "");
+    Wizard wizard = new Wizard(25, 0, 1, 50, "4-7", "Wizard", "");
 
     Random rand = new Random();
     Scanner scan = new Scanner(System.in);
@@ -46,43 +46,47 @@ public class Program {
                 "7: Remove character\n" +
                 "0: Exit");
         System.out.println("Enter your menu choice:");
-        String menuChoice = scan.nextLine();
+        try {
+            String menuChoice = scan.nextLine();
 
-        do {
-            switch (menuChoice) {
-                case "1":
-                    playTheGame();
-                    break;
+            do {
+                switch (menuChoice) {
+                    case "1":
+                        playTheGame();
+                        break;
 
-                case "2":
-                    createCharacter(); //Done
-                    break;
+                    case "2":
+                        createCharacter();
+                        break;
 
-                case "3":
-                    viewCharacters(); //Done
-                    break;
+                    case "3":
+                        viewCharacters();
+                        break;
 
-                case "4":
-                    classInformation(); //Done
-                    break;
+                    case "4":
+                        classInformation();
+                        break;
 
-                case "5":
-                    viewMonsters(); //Done
-                    break;
+                    case "5":
+                        viewMonsters();
+                        break;
 
-                case "6":
-                    saveAndLoadCharacter();
-                    break;
+                    case "6":
+                        saveAndLoadCharacter();
+                        break;
 
-                case "7":
-                    removeCharacter(); //Done
-                    break;
+                    case "7":
+                        removeCharacter();
+                        break;
 
-                case "0":
-                    exit(); //Done
-                    break;
-            }
-        } while (!menuChoice.equals("0"));
+                    case "0":
+                        exit();
+                        break;
+                }
+            } while (!menuChoice.equals("0"));
+        } catch (Exception e) {
+            System.out.println("Something went wrong, try again");
+        }
     }
 
     public void playTheGame() {
@@ -102,69 +106,72 @@ public class Program {
                     "3: Use health potion (20hp)\n" +
                     "4: Use mana potion (25mana)\n" +
                     "0: Leave dungeon");
-            String userInput = scan.nextLine();
-            int wizardDamage = wizard.getDamage();
-            int ratDamage = rat.getRatDamage();
+            try {
+                String userInput = scan.nextLine();
+                int wizardDamage = wizard.getDamage();
+                int ratDamage = rat.getRatDamage();
 
-            switch (userInput) {
-                case "1":
-                    rat.health -= wizard.getDamage();
-                    wizard.health -= ratDamage;
+                switch (userInput) {
+                    case "1":
+                        rat.health -= wizard.getDamage();
+                        wizard.health -= ratDamage;
 
-                    System.out.println("You attack the rat for " + wizardDamage + " damage");
-                    System.out.println("The rat attacks you for " + ratDamage + " damage");
+                        System.out.println("You attack the rat for " + wizardDamage + " damage");
+                        System.out.println("The rat attacks you for " + ratDamage + " damage");
 
-                    if (wizard.health <= 0) {
-                        System.out.println("You lost the fight and your character is dead");
-                        characters.remove(0);
+                        if (wizard.health <= 0) {
+                            System.out.println("You lost the fight and your character is dead");
+                            characters.remove(0);
+                            showMainMenu();
+                        } else if (rat.health <= 0) {
+                            System.out.println("You won the fight");
+                            wizard.level += 0.5;
+                            System.out.println("Your level is now " + wizard.level + " and your strength is growing");
+                            rat.health = 10;
+                            dropChanceManaAndHealth();
+                        }
+                        break;
+
+                    case "2":
+                        if (wizard.mana < 25) {
+                            System.out.println("You don't have enough mana");
+                        }
+                        int fireball = rand.nextInt(20 - 15 + 1) + 15;
+                        wizard.mana -= 25;
+
+                        rat.health -= fireball;
+                        wizard.health -= ratDamage;
+
+                        System.out.println("You shoot a fireball that deals " + fireball + " damage");
+                        System.out.println("The rat attacks you for " + ratDamage);
+                        if (wizard.health <= 0) {
+                            System.out.println("You lost the fight and your character is dead");
+                            characters.remove(0);
+                            showMainMenu();
+                        } else if (rat.health <= 0) {
+                            System.out.println("You won the fight");
+                            wizard.level += 0.5;
+                            System.out.println("Your level is now " + wizard.level + " and your strength is growing\n");
+                            rat.health = 10;
+                            dropChanceManaAndHealth();
+                        }
+                        break;
+
+                    case "3":
+                        useHealthPotion();
+                        break;
+
+                    case "4":
+                        useManaPotion();
+                        break;
+
+                    case "0":
+                        System.out.println("You manage to escape");
                         showMainMenu();
-                    } else if (rat.health <= 0) {
-                        System.out.println("You won the fight");
-                        wizard.level += 0.5;
-                        System.out.println("Your level is now " + wizard.level + " and your strength is growing");
-                        rat.health = 10;
-                        dropChanceManaAndHealth();
-                    }
-                    break;
-
-                case "2":
-                    if(wizard.mana < 25){
-                        System.out.println("You don't have enough mana");
-                    }
-                    int fireball = rand.nextInt(20 - 15 + 1) + 15;
-                    wizard.mana -= 25;
-
-                    rat.health -= fireball;
-                    wizard.health -= ratDamage;
-
-                    System.out.println("You shoot a fireball that deals " + fireball + " damage");
-                    System.out.println("The rat attacks you for " + ratDamage);
-                    if (wizard.health <= 0) {
-                        System.out.println("You lost the fight and your character is dead");
-                        characters.remove(0);
-                        showMainMenu();
-                    }
-                    else if (rat.health <= 0) {
-                        System.out.println("You won the fight");
-                        wizard.level += 0.5;
-                        System.out.println("Your level is now " + wizard.level + " and your strength is growing\n");
-                        rat.health = 10;
-                        dropChanceManaAndHealth();
-                    }
-                    break;
-
-                case "3":
-                  useHealthPotion();
-                    break;
-
-                case "4":
-                    useManaPotion();
-                    break;
-
-                case "0":
-                    System.out.println("You manage to escape");
-                    showMainMenu();
-                    break;
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("Please enter a valid input");
             }
         }
 
@@ -172,20 +179,26 @@ public class Program {
         wizard.mana = 100;
         getRandomMonster();
         while (monsterHealth > 0 && wizard.getHealth() > 0 && wizard.level < 10) {
-            if(monsterName.equalsIgnoreCase("bear")){
+            if (monsterName.equalsIgnoreCase("bear")) {
                 monsterDamage = bear.getBearDamage();
             }
-            if(monsterName.equalsIgnoreCase("spider")){
+            if (monsterName.equalsIgnoreCase("spider")) {
                 monsterDamage = spider.getSpiderDamage();
             }
-            if(monsterName.equalsIgnoreCase("troll")){
+            if (monsterName.equalsIgnoreCase("troll")) {
                 monsterDamage = troll.getTrollDamage();
+            }
+            if (monsterName.equalsIgnoreCase("orc")) {
+                monsterDamage = orc.getOrcDamage();
+            }
+            if (monsterName.equalsIgnoreCase("dragon")) {
+                monsterDamage = dragon.getDragonDamage();
             }
             System.out.println("Health: " + wizard.health + "            " + "Enemy Health: " + monsterHealth + "\n" +
                     "Mana: " + wizard.mana + "             " + "Enemy Damage: " + monsterDamageInfo + "\n" +
                     "Health potions: " + numOfHealthPotions + "\n" +
                     "Mana potions: " + numOfManaPotions + "\n");
-            System.out.println("You are fighting a " + monsterName +"\n"+
+            System.out.println("You are fighting a " + monsterName + "\n" +
                     "1: Attack\n" +
                     "2: Fireball\n" +
                     "3: Use health potion (30hp)\n" +
@@ -216,7 +229,7 @@ public class Program {
                     break;
 
                 case "2":
-                    if(wizard.mana < 25){
+                    if (wizard.mana < 25) {
                         System.out.println("You don't have enough mana");
                     }
                     int fireball = rand.nextInt(28 - 20 + 1) + 20;
@@ -231,8 +244,7 @@ public class Program {
                         System.out.println("You lost the fight and your character is dead");
                         characters.remove(0);
                         showMainMenu();
-                    }
-                    else if (rat.health <= 0) {
+                    } else if (rat.health <= 0) {
                         System.out.println("You won the fight");
                         wizard.level += 0.5;
                         System.out.println("Your level is now " + wizard.level + " and your strength is growing\n");
@@ -254,90 +266,78 @@ public class Program {
                     showMainMenu();
                     break;
             }
-            if(wizard.level == 10){
+            if (wizard.level == 10) {
                 System.out.println("You won the game!!!!!");
                 showMainMenu();
             }
         }
     }
 
-    public void useHealthPotion(){
+    public void useHealthPotion() {
         if (numOfHealthPotions == 0) {
             System.out.println("You are out of health potions\n" +
                     "Kill monsters for a chance to get more");
-        }
-        else if (wizard.health == 25) {
+        } else if (wizard.health == 25) {
             System.out.println("You already have full health");
 
-        }
-        else if (wizard.health + healAmount > 25){
+        } else if (wizard.health + healAmount > 25) {
             wizard.setHealth(25);
             numOfHealthPotions--;
-        }
-        else{
+        } else {
             wizard.health += healAmount;
             numOfHealthPotions--;
         }
     }
 
-    public void useMediumHealthPotion(){
+    public void useMediumHealthPotion() {
         if (numOfHealthPotions == 0) {
             System.out.println("You are out of health potions\n" +
                     "Kill monsters for a chance to get more");
-        }
-        else if (wizard.health == 45) {
+        } else if (wizard.health == 45) {
             System.out.println("You already have full health");
 
-        }
-        else if (wizard.health + bigHealAmount > 45){
+        } else if (wizard.health + bigHealAmount > 45) {
             wizard.setHealth(45);
             numOfHealthPotions--;
-        }
-        else{
+        } else {
             wizard.health += bigHealAmount;
             numOfHealthPotions--;
         }
     }
 
-    public void useManaPotion(){
+    public void useManaPotion() {
         if (numOfManaPotions == 0) {
             System.out.println("You are out of mana potions\n" +
                     "Kill monsters for a chance to get more");
-        }
-        else if (wizard.mana == 50) {
+        } else if (wizard.mana == 50) {
             System.out.println("You already have full mana");
 
-        }
-        else if (wizard.mana + manaAmount > 50){
+        } else if (wizard.mana + manaAmount > 50) {
             wizard.mana = 50;
             numOfManaPotions--;
-        }
-        else{
+        } else {
             wizard.mana += manaAmount;
             numOfManaPotions--;
         }
     }
 
-    public void useBigManaPotion(){
+    public void useBigManaPotion() {
         if (numOfManaPotions == 0) {
             System.out.println("You are out of mana potions\n" +
                     "Kill monsters for a chance to get more");
-        }
-        else if (wizard.mana == 100) {
+        } else if (wizard.mana == 100) {
             System.out.println("You already have full mana");
 
-        }
-        else if (wizard.mana + bigManaAmount > 100){
+        } else if (wizard.mana + bigManaAmount > 100) {
             wizard.mana = 100;
             numOfManaPotions--;
-        }
-        else{
+        } else {
             wizard.mana += bigManaAmount;
             numOfManaPotions--;
         }
     }
 
-    public void dropChanceManaAndHealth(){
+    public void dropChanceManaAndHealth() {
         if (rand.nextInt(100) > healthPotionDropChance) {
             numOfHealthPotions++;
             System.out.println("You got a health potion, you now have " + numOfHealthPotions + " health potions");
@@ -348,29 +348,25 @@ public class Program {
         }
     }
 
-    public void getRandomMonster(){
+    public void getRandomMonster() {
         int randomNumber = rand.nextInt(70) + 1;
-        if(randomNumber <= 20){
+        if (randomNumber <= 20) {
             monsterHealth = spider.health;
             monsterName = spider.name;
             monsterDamageInfo = spider.damageInfo;
-        }
-        else if(randomNumber > 20 && randomNumber <= 40){
+        } else if (randomNumber > 20 && randomNumber <= 40) {
             monsterHealth = troll.health;
             monsterName = troll.name;
             monsterDamageInfo = troll.damageInfo;
-        }
-        else if(randomNumber > 40 && randomNumber <= 60) {
+        } else if (randomNumber > 40 && randomNumber <= 60) {
             monsterHealth = bear.health;
             monsterName = bear.name;
             monsterDamageInfo = bear.damageInfo;
-        }
-        else if(randomNumber > 60 && randomNumber <= 65) {
+        } else if (randomNumber > 60 && randomNumber <= 65) {
             monsterHealth = orc.health;
             monsterName = orc.name;
             monsterDamageInfo = orc.damageInfo;
-        }
-        else if(randomNumber > 65) {
+        } else if (randomNumber > 65) {
             monsterHealth = dragon.health;
             monsterName = dragon.name;
             monsterDamageInfo = dragon.damageInfo;
@@ -387,9 +383,7 @@ public class Program {
             characters.add(wizard);
             System.out.println("You created a wizard called " + name);
             showMainMenu();
-        }
-
-        else {
+        } else {
             System.out.println("You already have a character");
             showMainMenu();
         }
@@ -402,15 +396,15 @@ public class Program {
             showMainMenu();
         }
         for (Character character : characters) {
-                System.out.println(character + " " + wizard.level);
+            System.out.println(character + "" + wizard.level);
             showMainMenu();
         }
     }
 
     public void classInformation() {
-                    wizard.information();
-                    showMainMenu();
-            }
+        wizard.information();
+        showMainMenu();
+    }
 
     public void viewMonsters() {
         monsters.add(orc);
@@ -473,8 +467,7 @@ public class Program {
                     if (numOfCharacters < MAX_CHARACTERS) {
                         System.out.println("You need to create a character before you can save.");
                         saveAndLoadCharacter();
-                    }
-                    else {
+                    } else {
                         FileUtils.writeObject("characterSave.ser", characters);
                         System.out.println("You saved your character");
                         showMainMenu();
@@ -487,8 +480,9 @@ public class Program {
                         saveAndLoadCharacter();
                     }
                     numOfCharacters++;
-                    ArrayList<Character> charactersFromFile = FileUtils.readObject("characterSave.ser");
-                    for (Character character : charactersFromFile) {
+                    try {
+                        ArrayList<Character> charactersFromFile = FileUtils.readObject("characterSave.ser");
+                        for (Character character : charactersFromFile) {
                             characters.add(character);
                             wizard.level = character.level;
                             wizard.name = character.name;
@@ -497,6 +491,9 @@ public class Program {
                             wizard.mana = character.mana;
                             System.out.println("Successfully loaded your saved wizard");
                             showMainMenu();
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong trying to load your character");
                     }
                     break;
 
@@ -515,10 +512,10 @@ public class Program {
         } else {
             System.out.println("This is your current character");
             for (Character character : characters) {
-                System.out.println("1: " + character);
+                System.out.println(character + "" + wizard.level);
             }
-            System.out.println("Write 1 to remove your character");
-            System.out.println("Write 0 to go back to main menu");
+            System.out.println("1: Remove character");
+            System.out.println("0: Main menu");
             String userInput = scan.nextLine();
 
             if (userInput.equals("1")) {
