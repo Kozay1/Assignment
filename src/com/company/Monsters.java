@@ -6,9 +6,6 @@ import java.util.ArrayList;
  * The super class of all the monsters
  */
 public abstract class Monsters extends Creature {
-
-    String name;
-
     /**
      * <h1>Monsters</h1>
      * Handles the wizard
@@ -20,7 +17,6 @@ public abstract class Monsters extends Creature {
      */
     public Monsters(int health, int damage, String damageInfo, String name) {
         super(health, damage, damageInfo, name);
-        this.name = name;
     }
 
     @Override

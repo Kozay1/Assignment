@@ -86,6 +86,8 @@ public class Program {
                 case "0":
                     exit();
                     break;
+                default:
+                    System.out.println("Wrong input");
             }
         }
     }
@@ -171,6 +173,8 @@ public class Program {
                         System.out.println("You manage to escape");
                         showMainMenu();
                         break;
+                    default:
+                        System.out.println("Wrong input");
                 }
             } catch (Exception e) {
                 System.out.println("Please enter a valid input");
@@ -232,7 +236,7 @@ public class Program {
                         break;
 
                     case "2":
-                        if (wizard.mana <= 25) {
+                        if (wizard.mana < 25) {
                             System.out.println("You don't have enough mana");
                         } else {
                             int fireball = rand.nextInt(28 - 20 + 1) + 20;
@@ -269,6 +273,8 @@ public class Program {
                         System.out.println("You manage to escape");
                         showMainMenu();
                         break;
+                    default:
+                        System.out.println("Wrong input");
                 }
             } catch (Exception e) {
                 System.out.println("Please enter a valid input");
@@ -464,6 +470,8 @@ public class Program {
                     monsters.clear();
                     showMainMenu();
                     break;
+                default:
+                    System.out.println("Wrong input");
             }
         }
     }
@@ -518,6 +526,8 @@ public class Program {
                 case "0":
                     showMainMenu();
                     break;
+                default:
+                    System.out.println("Wrong input");
             }
 
         }
